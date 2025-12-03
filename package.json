@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "echo 'Deploy script not needed for Cloudflare Pages'",
     "start": "next start",
     "lint": "eslint"
   },
