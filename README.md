@@ -37,4 +37,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Deploy on Cloudflare Pages
 
-This project is configured to deploy on Cloudflare Pages.
+This project is configured to deploy on Cloudflare Pages. nada
