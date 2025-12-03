@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: #030303;
+  --color-foreground: #ededed;
+
+  --color-neon-blue: #00f3ff;
+  --color-neon-purple: #bc13fe;
+  --color-neon-green: #0aff00;
+  --color-neon-pink: #ff00ff;
+
+  --color-card-bg: rgba(255, 255, 255, 0.03);
+  --color-card-border: rgba(255, 255, 255, 0.1);
+
+  /* Font families - reference the CSS variables from next/font */
+  --font-sans: var(--font-cairo);
+  --font-heading: var(--font-offside);
+
+  --animate-glitch: glitch 1s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes glitch {
+
+    2%,
+    64% {
+      transform: translate(2px, 0) skew(0deg);
+    }
+
+    4%,
+    60% {
+      transform: translate(-2px, 0) skew(0deg);
+    }
+
+    62% {
+      transform: translate(0, 0) skew(5deg);
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
+
+body {
+  background: #030303;
+  color: #ededed;
+  font-family: var(--font-cairo), sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Utilities */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-offside), sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px currentColor;
+}

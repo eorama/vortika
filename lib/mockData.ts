@@ -1,0 +1,118 @@
+import { Category, Series, Article } from './types';
+
+export const CATEGORIES: Category[] = [
+    {
+        id: '1',
+        title: 'El Fin del Trabajo',
+        description: 'Explora el colapso del modelo laboral tradicional y la economía post-trabajo.',
+        slug: 'fin-del-trabajo',
+        iconName: 'BriefcaseOff',
+        image: '/images/categories/end-of-work.jpg',
+    },
+    {
+        id: '2',
+        title: 'Sociedad Postlaboral',
+        description: 'Nuevas formas de vivir, convivir y relacionarse sin rol productivo.',
+        slug: 'sociedad-postlaboral',
+        iconName: 'Users',
+        image: '/images/categories/post-work-society.jpg',
+    },
+    {
+        id: '3',
+        title: 'Poder y Gobernanza',
+        description: 'Tecnocracia, poder algorítmico y legislación posthumana.',
+        slug: 'poder-gobernanza',
+        iconName: 'Scale',
+        image: '/images/categories/governance.jpg',
+    },
+    {
+        id: '4',
+        title: 'Identidad y Sentido',
+        description: 'Redefinición del ser humano, trascendencia y ego sin productividad.',
+        slug: 'identidad-sentido',
+        iconName: 'Fingerprint',
+        image: '/images/categories/identity.jpg',
+    },
+    {
+        id: '5',
+        title: 'Tecnología Autónoma',
+        description: 'IA general, robótica social y sistemas de decisión no humanos.',
+        slug: 'tecnologia-autonoma',
+        iconName: 'Bot',
+        image: '/images/categories/autonomous-tech.jpg',
+    },
+    {
+        id: '6',
+        title: 'Cultura y Creatividad',
+        description: 'Estéticas automatizadas y arte sin necesidad de venta.',
+        slug: 'cultura-creatividad',
+        iconName: 'Palette',
+        image: '/images/categories/culture.jpg',
+    },
+    {
+        id: '7',
+        title: 'Ecología Posthumana',
+        description: 'Relación entre naturaleza, tecnología y humanidad.',
+        slug: 'ecologia',
+        iconName: 'Leaf',
+        image: '/images/categories/ecology.jpg',
+    },
+    {
+        id: '8',
+        title: 'Acción en el Presente',
+        description: 'Guías y reflexiones sobre lo que podemos hacer hoy.',
+        slug: 'accion-presente',
+        iconName: 'Zap',
+        image: '/images/categories/action.jpg',
+    },
+];
+
+export const SERIES: Series[] = [
+    {
+        id: 's1',
+        title: 'Del Homo Faber al Homo Inútil',
+        description: 'Una crónica de la transición hacia la irrelevancia económica humana.',
+        slug: 'homo-faber-homo-inutil',
+        coverImage: '/images/series/homo-inutil.jpg',
+        categoryId: '1',
+        articleCount: 5,
+    },
+    {
+        id: 's2',
+        title: 'Dioses de Silicio',
+        description: 'Entendiendo a las nuevas entidades que gobernarán nuestras decisiones.',
+        slug: 'dioses-silicio',
+        coverImage: '/images/series/silicon-gods.jpg',
+        categoryId: '5',
+        articleCount: 3,
+    },
+];
+
+export const ARTICLES: Article[] = [
+    {
+        id: 'a1',
+        title: 'La Gran Renuncia Involuntaria',
+        excerpt: 'Cuando el mercado laboral te expulsa, no es una crisis, es una evolución.',
+        content: 'Contenido del artículo...',
+        slug: 'gran-renuncia-involuntaria',
+        seriesId: 's1',
+        orderInSeries: 1,
+        publishedAt: '2025-01-15',
+        readTime: '5 min',
+        coverImage: '/images/articles/resignation.jpg',
+        tags: ['Economía', 'Futuro'],
+    },
+    {
+        id: 'a2',
+        title: 'Renta Básica: ¿Libertad o Control?',
+        excerpt: 'Analizando las implicaciones éticas del dinero gratis universal.',
+        content: 'Contenido del artículo...',
+        slug: 'renta-basica-control',
+        seriesId: 's1',
+        orderInSeries: 2,
+        publishedAt: '2025-01-22',
+        readTime: '7 min',
+        coverImage: '/images/articles/ubi.jpg',
+        tags: ['UBI', 'Política'],
+    },
+];
