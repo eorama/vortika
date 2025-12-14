@@ -6,7 +6,7 @@ import clsx from 'clsx';
 interface GlitchTextProps {
     text: string;
     className?: string;
-    as?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
+    as?: 'h1' | 'h2' | 'h3' | 'p' | 'span' | 'div';
 }
 
 const GlitchText = ({ text, className, as: Component = 'span' }: GlitchTextProps) => {

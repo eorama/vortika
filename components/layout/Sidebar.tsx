@@ -54,7 +54,7 @@ const Sidebar = () => {
         <>
             {/* Mobile Toggle */}
             <button
-                className="fixed top-4 right-4 z-50 p-2 text-white bg-black/50 backdrop-blur-md rounded-md md:hidden border border-white/10"
+                className="fixed top-5 right-4 z-[80] p-2 text-white bg-black/50 backdrop-blur-md rounded-md md:hidden border border-white/10"
                 onClick={() => setIsOpen(!isOpen)}
             >
                 {isOpen ? <CloseIcon size={24} /> : <Menu size={24} />}
@@ -63,8 +63,9 @@ const Sidebar = () => {
             {/* Sidebar Container */}
             <motion.aside
                 className={clsx(
-                    "fixed left-0 top-0 h-full z-40 w-20 flex flex-col items-center py-8 bg-black/80 backdrop-blur-xl border-r border-white/5 transition-transform duration-300 md:translate-x-0",
-                    isOpen ? "translate-x-0" : "-translate-x-full"
+                    "fixed left-0 top-0 h-full z-[70] flex flex-col items-center py-8 bg-black/95 backdrop-blur-xl border-r border-white/5 transition-all duration-300",
+                    "w-64 md:w-20", // Mobile: w-64, Desktop: w-20
+                    isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
                 )}
             >
                 {/* Logo / Brand */}
@@ -79,7 +80,7 @@ const Sidebar = () => {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="flex-1 flex flex-col gap-8 w-full items-center">
+                <nav className="flex-1 flex flex-col gap-6 w-full px-4 md:px-0 md:items-center">
                     {NAV_ITEMS.map((item) => {
                         const isActive = pathname === item.path;
                         const Icon = item.icon;
@@ -88,10 +89,14 @@ const Sidebar = () => {
                             <Link
                                 key={item.path}
                                 href={item.path}
-                                className="relative group flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 hover:bg-white/5"
+                                onClick={() => setIsOpen(false)} // Close menu on click (mobile)
+                                className={clsx(
+                                    "relative group flex items-center md:justify-center gap-4 p-3 md:p-0 md:w-12 md:h-12 rounded-xl transition-all duration-300",
+                                    isActive ? "bg-white/5 md:bg-transparent" : "hover:bg-white/5"
+                                )}
                             >
                                 <div className={clsx(
-                                    "absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300",
+                                    "absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 hidden md:block",
                                     isActive ? "opacity-100 bg-neon-blue/10 shadow-[0_0_15px_rgba(0,243,255,0.3)]" : "group-hover:opacity-100 group-hover:bg-white/5"
                                 )} />
 
@@ -103,16 +108,24 @@ const Sidebar = () => {
                                     )}
                                 />
 
-                                {/* Tooltip */}
-                                <span className="absolute left-14 px-3 py-1 bg-black/90 border border-white/10 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-50">
+                                {/* Mobile Text Label */}
+                                <span className={clsx(
+                                    "md:hidden font-mono text-sm uppercase tracking-wider",
+                                    isActive ? "text-white font-bold" : "text-gray-400 group-hover:text-white"
+                                )}>
                                     {item.name}
                                 </span>
 
-                                {/* Active Indicator */}
+                                {/* Desktop Tooltip */}
+                                <span className="hidden md:block absolute left-14 px-3 py-1 bg-black/90 border border-white/10 rounded text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-50">
+                                    {item.name}
+                                </span>
+
+                                {/* Active Indicator (Desktop) */}
                                 {isActive && (
                                     <motion.div
                                         layoutId="activeNav"
-                                        className="absolute left-0 w-1 h-8 bg-neon-blue rounded-r-full"
+                                        className="hidden md:block absolute left-0 w-1 h-8 bg-neon-blue rounded-r-full"
                                     />
                                 )}
                             </Link>
@@ -120,22 +133,8 @@ const Sidebar = () => {
                     })}
                 </nav>
 
-                {/* Footer / Settings */}
-                <div className="mt-auto flex flex-col items-center gap-5 pb-2">
-                    {/* Social Links */}
-                    <a href="https://facebook.com/vortika" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#1877F2] transition-colors">
-                        <Facebook size={20} />
-                    </a>
-                    <a href="https://instagram.com/vortika_org" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#E4405F] transition-colors">
-                        <Instagram size={20} />
-                    </a>
-                    <a href="https://x.com/Vortika_org" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
-                        <XIcon size={18} />
-                    </a>
-                    <a href="https://tiktok.com/@vortika_org" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#00f2ea] transition-colors">
-                        <TikTokIcon size={20} />
-                    </a>
-                </div>
+                {/* Footer / Settings - Removed Socials for menu cleanup */}
+                <div className="mt-auto pb-4"></div>
             </motion.aside>
         </>
     );

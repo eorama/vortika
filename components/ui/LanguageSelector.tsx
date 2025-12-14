@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const LanguageSelector = () => {
+const LanguageSelector = ({ className = "relative" }: { className?: string }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [currentLang, setCurrentLang] = useState('ES');
 
@@ -20,7 +20,7 @@ const LanguageSelector = () => {
     };
 
     return (
-        <div className="fixed top-6 right-6 z-50">
+        <div className={`z-50 ${className}`}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="flex items-center gap-2 px-4 py-2 bg-black/60 backdrop-blur-md border border-white/10 rounded-full hover:border-neon-blue/50 transition-all duration-300 group"
