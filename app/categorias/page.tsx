@@ -29,21 +29,30 @@ export default function CategoriesPage() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: index * 0.05 }}
                             >
-                                <Link href={`/categorias/${cat.slug}`} className="group block h-full p-6 rounded-xl glass-panel hover:border-neon-purple/50 transition-colors relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                        <IconComponent size={64} />
-                                    </div>
+                                <Link
+                                    href={`/categorias/${cat.slug}`}
+                                    className="group block relative h-full rounded-xl overflow-hidden transition-transform hover:scale-[1.02]"
+                                >
+                                    {/* Gradient Border Background */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/80 pointer-events-none" />
 
-                                    <div className="relative z-10 flex flex-col h-full">
-                                        <div className="mb-4 text-neon-purple group-hover:text-white transition-colors">
-                                            <IconComponent size={32} />
+                                    {/* Inner Content with 1px margin for the thinner border effect */}
+                                    <div className="relative m-[1px] bg-[#0A0A0A] rounded-[11px] p-6 h-full flex flex-col hover:bg-[#0f0f0f] transition-colors">
+                                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                            <IconComponent size={64} />
                                         </div>
-                                        <h3 className="text-xl font-bold mb-2 group-hover:text-neon-purple transition-colors">
-                                            {cat.title}
-                                        </h3>
-                                        <p className="text-sm text-gray-400 flex-grow">
-                                            {cat.description}
-                                        </p>
+
+                                        <div className="relative z-10 flex flex-col h-full">
+                                            <div className="mb-4 text-neon-purple group-hover:text-white transition-colors">
+                                                <IconComponent size={32} />
+                                            </div>
+                                            <h3 className="text-xl font-bold mb-2 group-hover:text-neon-purple transition-colors">
+                                                {cat.title}
+                                            </h3>
+                                            <p className="text-sm text-gray-400 flex-grow">
+                                                {cat.description}
+                                            </p>
+                                        </div>
                                     </div>
                                 </Link>
                             </motion.div>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Sidebar from './Sidebar';
 import StarBackground from '../ui/StarBackground';
 import LanguageSelector from '../ui/LanguageSelector';
+import ScrollToTop from '../ui/ScrollToTop';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -22,6 +23,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             <main className="ml-0 md:ml-20 min-h-screen">
                 {children}
             </main>
+            <ScrollToTop />
         </>
     );
 };
