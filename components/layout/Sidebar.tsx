@@ -63,7 +63,7 @@ const Sidebar = () => {
                         return (
                             <Link
                                 key={item.path}
-                                href={item.path}
+                                href={item.path as any}
                                 onClick={() => setIsOpen(false)} // Close menu on click (mobile)
                                 className={clsx(
                                     "relative group flex items-center md:justify-center gap-4 p-3 md:p-0 md:w-12 md:h-12 rounded-xl transition-all duration-300",
