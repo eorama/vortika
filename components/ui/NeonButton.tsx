@@ -30,7 +30,7 @@ const NeonButton = ({ children, href, onClick, variant = 'primary', className }:
 
     if (href) {
         return (
-            <Link href={href} className={clsx(baseStyles, variants[variant], className)}>
+            <Link href={href as any} className={clsx(baseStyles, variants[variant], className)}>
                 {content}
             </Link>
         );
