@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 const TikTokIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
     <svg
@@ -38,6 +39,8 @@ const XIcon = ({ size = 20, className = "" }: { size?: number, className?: strin
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
+    const t = useTranslations('Footer');
+    const tHome = useTranslations('HomePage'); // For the subtitle if it matches home subtitle
 
     return (
         <footer className="w-full bg-black border-t border-white/10 py-12 px-8 mt-auto z-10 relative">
@@ -57,7 +60,9 @@ export default function Footer() {
                         />
                     </Link>
                     <p className="text-gray-500 text-sm text-center md:text-left max-w-xs">
-                        Explorando el futuro post-laboral, la IA y la identidad humana.
+                        {tHome('latest_posts_subtitle')}
+                        {/* Was: Explorando el futuro post-laboral, la IA y la identidad humana. */}
+                        {/* Note: I'm reusing the HomePage subtitle key as it seems identical. */}
                     </p>
                 </div>
 
@@ -80,10 +85,10 @@ export default function Footer() {
 
             {/* Bottom Bar */}
             <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-mono">
-                <p>&copy; {currentYear} Vōrtika. Todos los derechos reservados.</p>
+                <p>{t('copyright')}</p>
                 <div className="flex gap-4">
-                    <Link href="/privacidad" className="hover:text-neon-blue transition-colors">Privacidad</Link>
-                    <Link href="/terminos" className="hover:text-neon-blue transition-colors">Términos</Link>
+                    <Link href="/privacidad" className="hover:text-neon-blue transition-colors">{t('privacy')}</Link>
+                    <Link href="/terminos" className="hover:text-neon-blue transition-colors">{t('terms')}</Link>
                 </div>
             </div>
         </footer>

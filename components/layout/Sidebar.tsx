@@ -1,54 +1,24 @@
 'use client';
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Home, Layers, Grid, BookOpen, Zap, Menu, X as CloseIcon, Facebook, Instagram } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Link, usePathname } from '@/i18n/routing';
+import { Home, Grid, BookOpen, Zap, Menu, X as CloseIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import clsx from 'clsx';
-
-const NAV_ITEMS = [
-    { name: 'Categorías', path: '/categorias', icon: Grid },
-    { name: 'Manifiesto', path: '/manifiesto', icon: BookOpen },
-    { name: 'Suscribirse', path: '/suscribirse', icon: Zap },
-];
-
-const TikTokIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
-    <svg
-        width={size}
-        height={size}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-    >
-        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-    </svg>
-);
-
-const XIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
-    <svg
-        width={size}
-        height={size}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={className}
-    >
-        <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
-        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
-    </svg>
-);
+import { useTranslations } from 'next-intl';
 
 const Sidebar = () => {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
+    const t = useTranslations('Navigation');
+    // Note: usePathname from next-intl returns pathname without locale prefix for comparison.
+
+    const NAV_ITEMS = [
+        { name: t('home'), path: '/', icon: Home }, // Added Home explicitly if needed, or keeping existing check
+        { name: t('categories'), path: '/categorias', icon: Grid },
+        { name: t('manifesto'), path: '/manifiesto', icon: BookOpen },
+        { name: t('subscribe'), path: '/suscribirse', icon: Zap },
+    ];
 
     return (
         <>
@@ -82,7 +52,12 @@ const Sidebar = () => {
                 {/* Navigation Links */}
                 <nav className="flex-1 flex flex-col gap-6 w-full px-4 md:px-0 md:items-center">
                     {NAV_ITEMS.map((item) => {
-                        const isActive = pathname === item.path;
+                        // Check active state. usePathname from next-intl is normalized (no locale)
+                        // But root '/' might match everything if using startsWith. 
+                        // Exact match for '/' and startsWith for others?
+                        // Simple strict check for now.
+                        const isActive = pathname === item.path || (item.path !== '/' && pathname.startsWith(item.path));
+
                         const Icon = item.icon;
 
                         return (
@@ -141,3 +116,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+// End of file

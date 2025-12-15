@@ -1,0 +1,115 @@
+{
+    "HomePage": {
+        "subtitle": "Vōrtika: Del vórtice, el caos que precede al cambio",
+        "hero_title": "Lo que se viene no es lo que imaginábamos",
+        "categories_title": "Explorar Categorías",
+        "manifesto_cta": "Leer Manifiesto",
+        "latest_posts": "Últimas Publicaciones",
+        "latest_posts_subtitle": "Explorando el futuro post-laboral, la IA y la identidad humana"
+    },
+    "Navigation": {
+        "home": "Inicio",
+        "series": "Series",
+        "categories": "Categorías",
+        "manifesto": "Manifiesto",
+        "subscribe": "Suscribirse"
+    },
+    "Footer": {
+        "copyright": "© 2025 Vōrtika. Todos los derechos reservados",
+        "privacy": "Privacidad",
+        "terms": "Términos"
+    },
+    "Common": {
+        "read_article": "Leer Artículo",
+        "min_read": "min de lectura",
+        "next": "Siguiente",
+        "previous": "Anterior",
+        "see_more": "Ver más",
+        "explore": "Explorar ->",
+        "coming_soon": "Próximamente",
+        "creating_content": "Estamos creando contenido para esta categoría",
+        "part": "Parte",
+        "articulos": "Artículos"
+    },
+    "Series": {
+        "title": "Series",
+        "subtitle": "Narrativas secuenciales para entender el futuro"
+    },
+    "Categories": {
+        "title": "Categorías",
+        "subtitle": "Explora los pilares del cambio"
+    },
+    "CategoryDetail": {
+        "coming_soon_title": "Próximamente",
+        "coming_soon_desc": "Estamos creando contenido para esta categoría.",
+        "default_desc": "Contenido de la categoría"
+    },
+    "NotFound": {
+        "title": "Error en la simulación",
+        "description": "La página que buscas ha sido desintegrada o nunca existió en esta línea de tiempo",
+        "back_home": "Regresar al Origen"
+    },
+    "UI": {
+        "scroll": "Scroll"
+    },
+    "Manifiesto": {
+        "title": "Manifiesto",
+        "subtitle": "Lo que viene no espera.",
+        "section1_title": "El Caos como Origen",
+        "section1_text": "Vivimos en el vórtice. Un punto de inflexión donde las viejas estructuras se disuelven antes de que las nuevas hayan terminado de formarse. No es una crisis, es una metamorfosis.",
+        "section2_title": "La Obsolescencia Humana",
+        "section2_text": "Por primera vez en la historia, nos enfrentamos a la posibilidad real de nuestra propia irrelevancia productiva. ¿Qué somos cuando ya no somos útiles? Esta es la pregunta fundamental de nuestro tiempo.",
+        "section3_title": "Pregunta, Imagina, Actúa",
+        "section3_text": "Vōrtika no es un refugio, es un mapa. Un intento de cartografiar el territorio desconocido que se abre ante nosotros. No ofrecemos respuestas fáciles, sino las preguntas correctas."
+    },
+    "Subscribe": {
+        "title": "Únete al Vórtice",
+        "subtitle": "El futuro no espera a nadie. Suscríbete para recibir análisis profundos, ficción especulativa y las señales del cambio antes que el resto.",
+        "name_label": "Nombre",
+        "name_placeholder": "Tu nombre o alias",
+        "email_label": "Correo Electrónico",
+        "email_placeholder": "tu@correo.com",
+        "button_text": "Suscribirse",
+        "processing": "Procesando...",
+        "success_title": "¡Bienvenido a bordo!",
+        "success_text": "Has dado el primer paso hacia el futuro. Revisa tu bandeja de entrada.",
+        "send_another": "Enviar otro correo",
+        "spam_note": "Cero spam. Solo contenido de alta calidad. Date de baja cuando quieras."
+    },
+    "Privacy": {
+        "title": "Política de Privacidad",
+        "last_updated": "Última actualización: {date}",
+        "intro_title": "1. Introducción",
+        "intro_text": "Bienvenido a Vōrtika. Nos tomamos muy en serio su privacidad. Esta política describe cómo recopilamos, usamos y protegemos su información personal cuando interactúa con nuestra plataforma de contenido sobre el futuro post-laboral.",
+        "data_title": "2. Datos que Recopilamos",
+        "data_text": "Actualmente, Vōrtika es principalmente una plataforma informativa. Podemos recopilar datos técnicos anónimos como:",
+        "data_list_1": "Dirección IP y tipo de navegador.",
+        "data_list_2": "Páginas visitadas y tiempo de permanencia.",
+        "data_list_3": "Preferencias de idioma.",
+        "data_text_2": "Si decide suscribirse a nuestro boletín, recopilaremos su dirección de correo electrónico únicamente para enviarle actualizaciones.",
+        "usage_title": "3. Uso de la Información",
+        "usage_text": "Utilizamos la información recopilada para:",
+        "usage_list_1": "Mejorar la experiencia de usuario y el rendimiento del sitio.",
+        "usage_list_2": "Analizar tendencias de lectura para crear mejor contenido.",
+        "usage_list_3": "Enviar comunicaciones (solo si se ha suscrito explícitamente).",
+        "cookies_title": "4. Cookies",
+        "cookies_text": "Utilizamos cookies esenciales para recordar sus preferencias (como el estado de la animación o el idioma). No utilizamos cookies de rastreo publicitario invasivo.",
+        "contact_title": "5. Contacto",
+        "contact_text": "Si tiene preguntas sobre esta política, puede contactarnos a través de nuestras redes sociales o en privacidad@vortika.org."
+    },
+    "Terms": {
+        "title": "Términos y Condiciones",
+        "last_updated": "Última actualización: {date}",
+        "acceptance_title": "1. Aceptación de los Términos",
+        "acceptance_text": "Al acceder y utilizar Vōrtika, usted acepta cumplir y estar legalmente obligado por los términos y condiciones descritos en este documento. Si no está de acuerdo con alguna parte de estos términos, no debe utilizar nuestros servicios.",
+        "ip_title": "2. Propiedad Intelectual",
+        "ip_text_1": "Todo el contenido publicado en Vōrtika (textos, gráficos, logotipos, imágenes y código) es propiedad intelectual de Vōrtika o de sus creadores de contenido y está protegido por las leyes de derechos de autor.",
+        "ip_text_2": "Se permite compartir fragmentos de nuestro contenido siempre que se cite la fuente y se proporcione un enlace al artículo original.",
+        "usage_title": "3. Uso del Sitio",
+        "usage_text": "Usted se compromete a usar el sitio solo para fines legales y de una manera que no infrinja los derechos de, restrinja o inhiba el uso y disfrute del sitio por parte de cualquier tercero.",
+        "disclaimer_title": "4. Exención de Responsabilidad",
+        "disclaimer_text": "Vōrtika ofrece contenido con fines informativos y educativos sobre futurismo y tecnología. No ofrecemos asesoramiento legal, financiero o profesional. No nos hacemos responsables de las decisiones tomadas basándose en la información proporcionada en este sitio.",
+        "modifications_title": "5. Modificaciones",
+        "modifications_text": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación en el sitio."
+    }
+}

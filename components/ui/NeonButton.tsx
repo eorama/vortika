@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 interface NeonButtonProps {
     children: React.ReactNode;

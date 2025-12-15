@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion';
 import GlitchText from '@/components/ui/GlitchText';
+import { useTranslations } from 'next-intl';
 
 export default function ManifestoPage() {
+    const t = useTranslations('Manifiesto');
+
     return (
         <div className="min-h-screen pt-24 px-8 md:px-16 pb-32">
             <div className="max-w-3xl mx-auto">
@@ -13,9 +16,9 @@ export default function ManifestoPage() {
                     transition={{ duration: 0.8 }}
                     className="mb-16 text-center"
                 >
-                    <GlitchText text="Manifiesto" as="h1" className="text-5xl md:text-7xl font-bold mb-6" />
+                    <GlitchText text={t('title')} as="h1" className="text-5xl md:text-7xl font-bold mb-6" />
                     <p className="text-xl text-neon-blue font-mono">
-                        Lo que viene no espera.
+                        {t('subtitle')}
                     </p>
                 </motion.div>
 
@@ -26,9 +29,9 @@ export default function ManifestoPage() {
                         viewport={{ once: true }}
                         className="border-l-2 border-neon-blue pl-6"
                     >
-                        <h2 className="text-2xl font-bold text-white mb-4">El Caos como Origen</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">{t('section1_title')}</h2>
                         <p>
-                            Vivimos en el vórtice. Un punto de inflexión donde las viejas estructuras se disuelven antes de que las nuevas hayan terminado de formarse. No es una crisis, es una metamorfosis.
+                            {t('section1_text')}
                         </p>
                     </motion.section>
 
@@ -38,9 +41,9 @@ export default function ManifestoPage() {
                         viewport={{ once: true }}
                         className="border-l-2 border-neon-purple pl-6"
                     >
-                        <h2 className="text-2xl font-bold text-white mb-4">La Obsolescencia Humana</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">{t('section2_title')}</h2>
                         <p>
-                            Por primera vez en la historia, nos enfrentamos a la posibilidad real de nuestra propia irrelevancia productiva. ¿Qué somos cuando ya no somos útiles? Esta es la pregunta fundamental de nuestro tiempo.
+                            {t('section2_text')}
                         </p>
                     </motion.section>
 
@@ -50,9 +53,9 @@ export default function ManifestoPage() {
                         viewport={{ once: true }}
                         className="border-l-2 border-neon-green pl-6"
                     >
-                        <h2 className="text-2xl font-bold text-white mb-4">Pregunta, Imagina, Actúa</h2>
+                        <h2 className="text-2xl font-bold text-white mb-4">{t('section3_title')}</h2>
                         <p>
-                            Vōrtika no es un refugio, es un mapa. Un intento de cartografiar el territorio desconocido que se abre ante nosotros. No ofrecemos respuestas fáciles, sino las preguntas correctas.
+                            {t('section3_text')}
                         </p>
                     </motion.section>
                 </div>

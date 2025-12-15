@@ -5,11 +5,13 @@ import GlitchText from '@/components/ui/GlitchText';
 import NeonButton from '@/components/ui/NeonButton';
 import { useState } from 'react';
 import { Send, ShieldCheck } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function SubscribePage() {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const t = useTranslations('Subscribe');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -28,13 +30,12 @@ export default function SubscribePage() {
             <div className="max-w-2xl w-full mx-auto">
                 <div className="text-center mb-12">
                     <GlitchText
-                        text="Únete al Vórtice"
+                        text={t('title')}
                         as="h1"
                         className="text-4xl md:text-6xl font-bold mb-6"
                     />
                     <p className="text-xl text-gray-300 leading-relaxed">
-                        El futuro no espera a nadie. Suscríbete para recibir análisis profundos,
-                        ficción especulativa y las señales del cambio antes que el resto.
+                        {t('subtitle')}
                     </p>
                 </div>
 
@@ -57,20 +58,20 @@ export default function SubscribePage() {
                             <div className="w-20 h-20 bg-neon-green/20 rounded-full flex items-center justify-center mx-auto mb-6 text-neon-green">
                                 <Send size={40} />
                             </div>
-                            <h3 className="text-2xl font-bold text-white mb-2">¡Bienvenido a bordo!</h3>
-                            <p className="text-gray-400">Has dado el primer paso hacia el futuro. Revisa tu bandeja de entrada.</p>
+                            <h3 className="text-2xl font-bold text-white mb-2">{t('success_title')}</h3>
+                            <p className="text-gray-400">{t('success_text')}</p>
                             <button
                                 onClick={() => setStatus('idle')}
                                 className="mt-8 text-neon-blue hover:text-white transition-colors text-sm font-mono"
                             >
-                                Enviar otro correo
+                                {t('send_another')}
                             </button>
                         </motion.div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
                                 <label htmlFor="name" className="block text-sm font-mono text-neon-blue uppercase tracking-wider">
-                                    Nombre
+                                    {t('name_label')}
                                 </label>
                                 <input
                                     type="text"
@@ -79,13 +80,13 @@ export default function SubscribePage() {
                                     onChange={(e) => setName(e.target.value)}
                                     required
                                     className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-colors placeholder:text-gray-600"
-                                    placeholder="Tu nombre o alias"
+                                    placeholder={t('name_placeholder')}
                                 />
                             </div>
 
                             <div className="space-y-2">
                                 <label htmlFor="email" className="block text-sm font-mono text-neon-blue uppercase tracking-wider">
-                                    Correo Electrónico
+                                    {t('email_label')}
                                 </label>
                                 <input
                                     type="email"
@@ -94,7 +95,7 @@ export default function SubscribePage() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
                                     className="w-full bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-colors placeholder:text-gray-600"
-                                    placeholder="tu@correo.com"
+                                    placeholder={t('email_placeholder')}
                                 />
                             </div>
 
@@ -105,10 +106,10 @@ export default function SubscribePage() {
                                     className="w-full bg-gradient-to-r from-neon-blue to-neon-purple text-black font-bold py-4 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
                                 >
                                     {status === 'loading' ? (
-                                        <span className="animate-pulse">Procesando...</span>
+                                        <span className="animate-pulse">{t('processing')}</span>
                                     ) : (
                                         <>
-                                            Suscribirse <Send size={18} />
+                                            {t('button_text')} <Send size={18} />
                                         </>
                                     )}
                                 </button>
@@ -116,7 +117,7 @@ export default function SubscribePage() {
 
                             <div className="flex items-center justify-center gap-2 text-xs text-gray-500 mt-6">
                                 <ShieldCheck size={14} className="text-neon-green" />
-                                <span>Cero spam. Solo contenido de alta calidad. Date de baja cuando quieras.</span>
+                                <span>{t('spam_note')}</span>
                             </div>
                         </form>
                     )}
