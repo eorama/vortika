@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { SlugProvider } from '@/components/providers/SlugProvider';
 
 const offside = Offside({
   weight: "400",
@@ -52,9 +53,11 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <NextIntlClientProvider messages={messages}>
-          <MainLayout>
-            {children}
-          </MainLayout>
+          <SlugProvider>
+            <MainLayout>
+              {children}
+            </MainLayout>
+          </SlugProvider>
         </NextIntlClientProvider>
       </body>
     </html>

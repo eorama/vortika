@@ -97,7 +97,14 @@ export async function getCategoryBySlug(slug: string, locale: string = 'es') {
                 $eq: slug,
             },
         },
-        populate: '*',
+        populate: {
+            series: {
+                populate: '*',
+            },
+            localizations: {
+                fields: ['slug', 'locale'],
+            },
+        },
         locale: locale
     });
 
@@ -131,13 +138,6 @@ export async function getSeries(locale: string = 'es') {
 
 export async function getSeriesBySlug(slug: string, locale: string = 'es') {
     // We need deep populate to get Articles sort by createdAt ASC (Parte 1... Part N)
-    // Strapi standard populate=* works for 1st level.
-    // For series -> articles, we need to ensure articles are populated.
-    // Default Strapi populate=* usually includes relations like articles.
-    // However, we want to sort articles by createdAt ASC.
-    // Strapi v4 populate syntax for sorting relations:
-    // populate[articles][sort]=createdAt:asc
-
     const data = await fetchAPI('/api/series', {
         filters: {
             slug: {
@@ -151,6 +151,9 @@ export async function getSeriesBySlug(slug: string, locale: string = 'es') {
             },
             category: {
                 populate: '*',
+            },
+            localizations: {
+                fields: ['slug', 'locale'],
             },
         },
         locale: locale
@@ -172,6 +175,9 @@ export async function getArticleBySlug(slug: string, locale: string = 'es') {
         populate: {
             serie: {
                 populate: '*',
+            },
+            localizations: {
+                fields: ['slug', 'locale'],
             },
         },
         locale: locale

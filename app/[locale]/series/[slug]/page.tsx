@@ -11,6 +11,10 @@ interface PageProps {
     params: Promise<{ slug: string; locale: string }>;
 }
 
+import { SlugUpdater } from '@/components/providers/SlugProvider';
+
+// ...
+
 export default async function SeriesDetailPage({ params }: PageProps) {
     const { slug, locale } = await params;
     const t = await getTranslations('Series'); // Need generic Series translations? Or specific?
@@ -22,11 +26,23 @@ export default async function SeriesDetailPage({ params }: PageProps) {
         notFound();
     }
 
-    const { name, description, articulos } = series;
-    const seriesArticles = articulos || []; // Already sorted by strapi helper
+    const { name, description, articulos, localizations } = series.attributes || series;
+    const seriesArticles = articulos?.data || articulos || []; // Already sorted by strapi helper
+
+    // Extract slugs safely
+    const slugs = { [locale]: slug };
+    const locs = localizations?.data || localizations || [];
+
+    locs.forEach((loc: any) => {
+        const attr = loc.attributes || loc;
+        if (attr.locale && attr.slug) {
+            slugs[attr.locale] = attr.slug;
+        }
+    });
 
     return (
         <div className="min-h-screen pt-24 px-8 md:px-16 container mx-auto">
+            <SlugUpdater slugs={slugs} />
             <div className="max-w-4xl mx-auto">
                 <div className="mb-12">
                     <span className="text-neon-blue font-mono text-sm uppercase tracking-widest mb-2 block">{tCommon('part') ? 'Serie' : 'Serie'}</span>
@@ -61,7 +77,7 @@ export default async function SeriesDetailPage({ params }: PageProps) {
                                 key={article.id}
                             >
                                 <Link
-                                    href={`/articulo/${article.slug}`}
+                                    href={{ pathname: '/articulo/[slug]', params: { slug: article.slug } }}
                                     className="group block relative rounded-xl overflow-hidden transition-transform hover:scale-[1.01]"
                                 >
                                     {/* Gradient Border Background */}

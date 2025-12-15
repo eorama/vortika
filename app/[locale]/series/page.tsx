@@ -44,7 +44,7 @@ export default async function SeriesPage({ params }: PageProps) {
                             <div
                                 key={serie.id}
                             >
-                                <Link href={`/series/${slug}`} className="group block relative h-80 overflow-hidden rounded-xl glass-panel">
+                                <Link href={{ pathname: '/series/[slug]', params: { slug } }} className="group block relative h-80 overflow-hidden rounded-xl glass-panel">
                                     {/* Category Pill */}
                                     {categoryName && (
                                         <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md">

@@ -43,7 +43,7 @@ export default async function CategoriesPage({ params }: PageProps) {
                                 className="h-full"
                             >
                                 <Link
-                                    href={`/categorias/${slug}`}
+                                    href={{ pathname: '/categorias/[slug]', params: { slug } }}
                                     className="group block relative h-full rounded-xl overflow-hidden transition-transform hover:scale-[1.02]"
                                 >
                                     {/* Gradient Border Background */}

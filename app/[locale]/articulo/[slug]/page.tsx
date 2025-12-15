@@ -11,6 +11,10 @@ interface PageProps {
     params: Promise<{ slug: string; locale: string }>;
 }
 
+import { SlugUpdater } from '@/components/providers/SlugProvider';
+
+// ...
+
 export default async function ArticlePage({ params }: PageProps) {
     const { slug, locale } = await params;
     const tCommon = await getTranslations('Common');
@@ -21,8 +25,19 @@ export default async function ArticlePage({ params }: PageProps) {
         notFound();
     }
 
-    const { title, opening_quote, content, publishedAt, serie } = article;
+    const { title, opening_quote, content, publishedAt, serie, localizations } = article.attributes || article;
     const readTime = calculateReadingTime(content || '');
+
+    // Extract slugs safely
+    const slugs = { [locale]: slug };
+    const locs = localizations?.data || localizations || [];
+
+    locs.forEach((loc: any) => {
+        const attr = loc.attributes || loc;
+        if (attr.locale && attr.slug) {
+            slugs[attr.locale] = attr.slug;
+        }
+    });
 
     // Determine Next/Prev links
     // Strategy: We have the article and we populated the series. 
@@ -64,12 +79,13 @@ export default async function ArticlePage({ params }: PageProps) {
 
     return (
         <article className="min-h-screen pt-24 pb-32 px-4 md:px-16 container mx-auto">
+            <SlugUpdater slugs={slugs} />
             <div className="max-w-5xl mx-auto">
                 <div className="bg-black/40 backdrop-blur-md rounded-3xl p-5 md:p-12 border border-white/10 mb-12">
                     {/* Header */}
                     <header className="mb-12 text-center">
                         {seriesSlug && (
-                            <Link href={`/series/${seriesSlug}`} className="text-neon-blue text-sm font-mono uppercase tracking-widest hover:underline mb-4 block">
+                            <Link href={{ pathname: '/series/[slug]', params: { slug: seriesSlug } }} className="text-neon-blue text-sm font-mono uppercase tracking-widest hover:underline mb-4 block">
                                 {seriesName} / {tCommon('part')} {currentPartNumber}
                             </Link>
                         )}
@@ -90,20 +106,6 @@ export default async function ArticlePage({ params }: PageProps) {
                                 {opening_quote}
                             </p>
                         )}
-                        {/* 
-                          Strapi Rich Text (Blocks) or Markdown? 
-                          If Markdown: use a markdown parser. 
-                          If Blocks: use BlocksRenderer.
-                          The prompt mentions `content`. 
-                          Current mock used `dangerouslySetInnerHTML` implying HTML/Markdown.
-                          If Strapi sends Markdown, we need `react-markdown` or similar.
-                          If Strapi sends HTML (older versions or Rich Text Plugin outputting HTML), strict HTML.
-                          Assuming Markdown or simplified text for now. Explicit support for Blocks is complex.
-                          If it's just a string, we display it.
-                          Let's assume it *might* be markdown, but without a library we just dump it or treat as text.
-                          Actually, mock data suggests HTML string.
-                          We'll check if it allows basic rendering.
-                        */}
                         <div className="whitespace-pre-wrap">
                             {content}
                         </div>
@@ -113,7 +115,7 @@ export default async function ArticlePage({ params }: PageProps) {
                 {/* Navigation */}
                 <div className="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-8 md:gap-0">
                     {prevArticle ? (
-                        <Link href={`/articulo/${prevArticle.slug}`} className="flex items-center gap-3 text-gray-400 hover:text-neon-blue transition-colors self-start md:self-auto group">
+                        <Link href={{ pathname: '/articulo/[slug]', params: { slug: prevArticle.slug } }} className="flex items-center gap-3 text-gray-400 hover:text-neon-blue transition-colors self-start md:self-auto group">
                             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
                             <div className="text-left">
                                 <span className="block text-xs font-mono text-gray-500 mb-1">{tCommon('previous')}</span>
@@ -123,7 +125,7 @@ export default async function ArticlePage({ params }: PageProps) {
                     ) : <div className="hidden md:block" />}
 
                     {nextArticle ? (
-                        <Link href={`/articulo/${nextArticle.slug}`} className="flex items-center gap-3 text-gray-400 hover:text-neon-blue transition-colors text-right self-end md:self-auto group">
+                        <Link href={{ pathname: '/articulo/[slug]', params: { slug: nextArticle.slug } }} className="flex items-center gap-3 text-gray-400 hover:text-neon-blue transition-colors text-right self-end md:self-auto group">
                             <div className="text-right">
                                 <span className="block text-xs font-mono text-gray-500 mb-1">{tCommon('next')}</span>
                                 <span className="block font-bold text-sm md:text-base max-w-[200px] md:max-w-xs leading-tight">{nextArticle.title}</span>
