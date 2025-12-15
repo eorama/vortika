@@ -26,11 +26,11 @@ const LanguageSelector = ({ className = "relative" }: { className?: string }) =>
     ];
 
     const findKeyForTemplate = (tmpl: string) => {
-        // @ts-expect-error -- Pathnames typing is complex
+        // Pathnames typing is complex, iterating as typical object
         for (const [key, value] of Object.entries(routing.pathnames)) {
             if (key === tmpl) return key;
             if (typeof value === 'object') {
-                if (Object.values(value).includes(tmpl)) return key;
+                if ((Object.values(value) as string[]).includes(tmpl)) return key;
             } else {
                 if (value === tmpl) return key;
             }
@@ -48,21 +48,13 @@ const LanguageSelector = ({ className = "relative" }: { className?: string }) =>
             const currentSlug = nextParams.slug as string;
             // Try to convert the current pathname to a template
             if (currentSlug && pathname.includes(currentSlug)) {
-                nextPathname = pathname.replace(currentSlug, '[slug]');
+                nextPathname = pathname.replace(currentSlug, '[slug]') as any;
             }
 
             // Update the slug param
-            // @ts-expect-error -- Typed params
             nextParams.slug = slugs[nextLocale];
         } else {
-            // For static pages, we might need to find the key too if pathname is localized
-            // e.g. /manifesto -> key: /manifiesto
-            // But if we don't have slugs, next-intl usually maps pathname automatically?
-            // next-intl docs says: "If you provide a pathname, it must be one of the keys defined in pathnames"
-            // OR "a localized pathname". 
-            // To be safe, let's try to map it.
-            // However, for static pages without params, simple replacement usually works if passed correct structure.
-            // But let's apply the lookup universally to be safe.
+            // For static pages...
         }
 
         // Find the canonical route key
@@ -70,7 +62,7 @@ const LanguageSelector = ({ className = "relative" }: { className?: string }) =>
 
         startTransition(() => {
             // @ts-expect-error -- Params matching for dynamic routes
-            router.replace({ pathname: routeKey, params: nextParams }, { locale: nextLocale });
+            router.replace({ pathname: routeKey as any, params: nextParams }, { locale: nextLocale });
         });
     };
 
