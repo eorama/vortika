@@ -1,8 +1,5 @@
-'use client';
-
 import { Link } from '@/i18n/routing';
-import Script from 'next/script';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Coffee } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 const TikTokIcon = ({ size = 20, className = "" }: { size?: number, className?: string }) => (
@@ -87,24 +84,24 @@ export default function Footer() {
             {/* Bottom Bar */}
             <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500 font-mono">
                 <p>{t('copyright')}</p>
-                <div className="flex gap-4">
+                <div className="flex items-center gap-4">
                     <Link href="/privacidad" className="hover:text-neon-blue transition-colors">{t('privacy')}</Link>
                     <Link href="/terminos" className="hover:text-neon-blue transition-colors">{t('terms')}</Link>
                 </div>
             </div>
-            <Script
-                src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
-                data-name="bmc-button"
-                data-slug="vortika"
-                data-color="#14151f"
-                data-emoji="☕"
-                data-font="Inter"
-                data-text="Buy me a coffee"
-                data-outline-color="#ffffff"
-                data-font-color="#ffffff"
-                data-coffee-color="#FFDD00"
-                strategy="lazyOnload"
-            />
+
+            {/* Buy Me a Coffee Button - Custom */}
+            <div className="fixed bottom-6 right-6 z-50">
+                <a
+                    href="https://buymeacoffee.com/vortika"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 bg-black hover:bg-white/5 text-white font-medium py-3 px-4 rounded-full shadow-lg transition-transform hover:scale-105 border border-[#00f3ff]/30 hover:border-[#00f3ff] group"
+                >
+                    <Coffee size={20} className="stroke-[#00f3ff]" />
+                    <span className="group-hover:text-[#00f3ff] transition-colors">{t('buy_coffee')}</span>
+                </a>
+            </div>
         </footer>
     );
 }

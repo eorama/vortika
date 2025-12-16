@@ -9,7 +9,7 @@ export default function ScrollToTop() {
     const [isVisible, setIsVisible] = useState(false);
     const { scrollYProgress } = useScroll();
     const pathname = usePathname();
-    const isArticlePage = pathname?.startsWith('/articulo/');
+    const isArticlePage = pathname?.includes('/articulo/') || pathname?.includes('/article/');
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export default function ScrollToTop() {
 
     return (
         <motion.div
-            className="fixed bottom-8 right-8 z-50 flex flex-col items-center gap-2"
+            className="fixed bottom-24 right-6 z-50 flex flex-col items-center gap-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{
                 opacity: 1,
