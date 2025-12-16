@@ -1,6 +1,7 @@
 'use client';
 
 import { Link } from '@/i18n/routing';
+import Script from 'next/script';
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -91,6 +92,19 @@ export default function Footer() {
                     <Link href="/terminos" className="hover:text-neon-blue transition-colors">{t('terms')}</Link>
                 </div>
             </div>
+            <Script
+                src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+                data-name="bmc-button"
+                data-slug="vortika"
+                data-color="#14151f"
+                data-emoji="☕"
+                data-font="Inter"
+                data-text="Buy me a coffee"
+                data-outline-color="#ffffff"
+                data-font-color="#ffffff"
+                data-coffee-color="#FFDD00"
+                strategy="lazyOnload"
+            />
         </footer>
     );
 }
