@@ -4,6 +4,7 @@ import { Link } from '@/i18n/routing';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import React from 'react';
 import { getTranslations } from 'next-intl/server';
+import { Article } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,9 +44,9 @@ export default async function ArticlePage({ params }: PageProps) {
         try {
             const siblings = await getArticlesBySeries(seriesId, locale);
             // Sort by orderInSeries
-            siblings.sort((a, b) => a.orderInSeries - b.orderInSeries);
+            siblings.sort((a: Article, b: Article) => a.orderInSeries - b.orderInSeries);
 
-            const currentIndex = siblings.findIndex(a => a.id === article.id);
+            const currentIndex = siblings.findIndex((a: Article) => a.id === article.id);
             if (currentIndex !== -1) {
                 currentPartNumber = siblings[currentIndex].orderInSeries;
                 prevArticle = siblings[currentIndex - 1];

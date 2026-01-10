@@ -49,6 +49,10 @@ export const routing = defineRouting({
         '/terminos': {
             es: '/terminos',
             en: '/terms'
+        },
+        '/cookies': {
+            es: '/cookies',
+            en: '/cookies'
         }
     }
 });

@@ -1,0 +1,2 @@
+app/[locale]/manifiesto/page.tsx(27,42): error TS7006: Parameter 'part' implicitly has an 'any' type.
+components/layout/Footer.tsx(90,27): error TS2322: Type '"/cookies"' is not assignable to type '"/" | "/series" | "/categorias" | "/manifiesto" | "/suscribirse" | "/privacidad" | "/terminos" | ({ pathname: "/"; } & Omit<UrlObject, "pathname">) | ({ pathname: "/series"; } & Omit<...>) | ... 7 more ... | ({ ...; } & Omit<...>)'.

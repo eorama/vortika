@@ -24,7 +24,7 @@ export default async function ManifestoPage({ params }: PageProps) {
     const parts = page.content.split('<h3');
     const intro = parts[0];
     // Reconstruct sections. Each part in rest starts with ">Title</h3>Body"
-    const sections = parts.slice(1).map((part) => {
+    const sections = parts.slice(1).map((part: string) => {
         const closeTagIndex = part.indexOf('</h3>');
         if (closeTagIndex === -1) return { title: '', content: part }; // Fallback
 

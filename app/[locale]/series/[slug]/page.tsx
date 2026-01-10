@@ -4,6 +4,7 @@ import { Link } from '@/i18n/routing';
 import GlitchText from '@/components/ui/GlitchText';
 import { ArrowRight } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
+import { Article } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,7 +32,7 @@ export default async function SeriesDetailPage({ params }: PageProps) {
     // Fetch articles for this series
     const seriesArticles = await getArticlesBySeries(series.id, locale);
     // Sort by orderInSeries
-    seriesArticles.sort((a, b) => a.orderInSeries - b.orderInSeries);
+    seriesArticles.sort((a: Article, b: Article) => a.orderInSeries - b.orderInSeries);
 
     // Fetch translated slugs
     const translatedSlugs = await getTranslatedSlugs('series', series.translations);
