@@ -1,5 +1,5 @@
 import Hero from "@/components/home/Hero";
-import { getArticles, getStrapiMedia } from "@/lib/strapi";
+import { getArticles } from "@/lib/wordpress";
 import Image from "next/image";
 import { getTranslations } from 'next-intl/server';
 
@@ -34,11 +34,11 @@ export default async function Home({ params }: PageProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles && articles.map((article: any) => {
-              // Flattened response structure handling
+              // Normalized WordPress data
               const title = article.title;
-              const quote = article.opening_quote;
-              const imageUrl = getStrapiMedia(article.cover?.url);
-              const seriesTitle = article.serie?.name;
+              const quote = article.excerpt; // Mapped from opening_quote in lib/wordpress
+              const imageUrl = article.coverImage;
+              const seriesTitle = article.seriesName;
 
               // Need slug prefix logic? /articulo/slug is not localized prefix?
               // Link from next-intl handles prefix. 

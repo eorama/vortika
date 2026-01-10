@@ -1,4 +1,4 @@
-import { getCategories } from '@/lib/strapi';
+import { getCategories } from '@/lib/wordpress';
 import { Link } from '@/i18n/routing';
 import GlitchText from '@/components/ui/GlitchText';
 import { HelpCircle } from 'lucide-react';
@@ -34,7 +34,7 @@ export default async function CategoriesPage({ params }: PageProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {categories && categories.map((cat: any, index: number) => {
-                        const { name, slug, description, cover } = cat;
+                        const { title, slug, description, image } = cat;
                         const IconComponent = HelpCircle; // Default
 
                         return (
@@ -60,7 +60,7 @@ export default async function CategoriesPage({ params }: PageProps) {
                                                 <IconComponent size={32} />
                                             </div>
                                             <h3 className="text-xl font-bold mb-2 group-hover:text-neon-purple transition-colors">
-                                                {name}
+                                                {title}
                                             </h3>
                                             <p className="text-sm text-gray-400 flex-grow line-clamp-3">
                                                 {description}

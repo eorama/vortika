@@ -5,6 +5,7 @@ export type Category = {
   slug: string;
   iconName: string; // Lucide icon name or custom
   image: string; // Path to image
+  translations?: Record<string, number>;
 };
 
 export type Series = {
@@ -15,6 +16,8 @@ export type Series = {
   coverImage: string;
   categoryId: string;
   articleCount: number;
+  categoryName?: string;
+  translations?: Record<string, number>;
 };
 
 export type Article = {
@@ -29,6 +32,8 @@ export type Article = {
   readTime: string;
   coverImage: string;
   tags: string[];
+  seriesName?: string;
+  translations?: Record<string, number>;
 };
 
 export type User = {
@@ -36,4 +41,13 @@ export type User = {
   email: string;
   name?: string;
   subscribedSeries: string[];
+};
+
+export type Page = {
+  id: string;
+  title: string;
+  content: string;
+  slug: string;
+  date?: string;
+  modified?: string;
 };

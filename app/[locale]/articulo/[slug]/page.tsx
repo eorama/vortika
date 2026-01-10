@@ -1,4 +1,4 @@
-import { getArticleBySlug, calculateReadingTime } from '@/lib/strapi';
+import { getArticleBySlug, getArticlesBySeries, calculateReadingTime, getTranslatedSlugs } from '@/lib/wordpress';
 import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -25,55 +25,52 @@ export default async function ArticlePage({ params }: PageProps) {
         notFound();
     }
 
-    const { title, opening_quote, content, publishedAt, serie, localizations } = article.attributes || article;
-    const readTime = calculateReadingTime(content || '');
+    const { title, excerpt: opening_quote, content, publishedAt, seriesId, seriesName } = article;
+    const readTime = article.readTime || calculateReadingTime(content || '').toString() + ' min';
 
-    // Extract slugs safely
-    const slugs = { [locale]: slug };
-    const locs = localizations?.data || localizations || [];
+    // Fetch translated slugs for language switcher
+    const translatedSlugs = await getTranslatedSlugs('post', article.translations);
+    const slugs = { ...translatedSlugs, [locale]: slug };
 
-    locs.forEach((loc: any) => {
-        const attr = loc.attributes || loc;
-        if (attr.locale && attr.slug) {
-            slugs[attr.locale] = attr.slug;
-        }
-    });
-
-    // Determine Next/Prev links
-    // Strategy: We have the article and we populated the series. 
-    // We should find the current article index in the series' articles list.
-    // However, `getArticleBySlug` populated `serie`. Does `serie` include `articles`?
-    // In Strapi v4, deep populate is not automatic. 
-    // If we used 'populate[serie][populate]=*' in `getArticleBySlug`, we should have the articles.
-    // We need to sort them to match the Series page order (Part 1, Part 2...).
-    // But `serie.articles` might not be sorted by `createdAt` by default unless we requested it.
-    // For robust "Next/Prev" logic, we usually fetch the whole series + articles again or rely on what we have.
-    // Let's assume we have `serie.articles` and we do a client-side sort if needed, or hope default is ID/created.
-    // A better approach is to fetch the series separately using `getSeriesBySlug` if we have the series slug.
-
+    // Logic for next/prev
     let nextArticle: any = null;
     let prevArticle: any = null;
     let currentPartNumber = 1;
-    let seriesSlug = null;
-    let seriesName = null;
+    let seriesSlug = ''; // WP term doesn't always have slug easily accessible without fetch, but we can't link without it. 
+    // We need to fetch series to get slug if we have seriesId
 
-    // Fix: relation is 'articulos' not 'articles'
-    if (serie) {
-        seriesSlug = serie.slug;
-        seriesName = serie.name;
+    if (seriesId) {
+        try {
+            const siblings = await getArticlesBySeries(seriesId, locale);
+            // Sort by orderInSeries
+            siblings.sort((a, b) => a.orderInSeries - b.orderInSeries);
 
-        let allArticles = serie.articulos || [];
+            const currentIndex = siblings.findIndex(a => a.id === article.id);
+            if (currentIndex !== -1) {
+                currentPartNumber = siblings[currentIndex].orderInSeries;
+                prevArticle = siblings[currentIndex - 1];
+                nextArticle = siblings[currentIndex + 1];
 
-        // Sort by id or createdAt to match Series Page 'Part N' logic.
-        allArticles.sort((a: any, b: any) => {
-            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-        });
+                // Get series slug from siblings? No, they don't have it generally. 
+                // We need to fetch series by ID or embedded. 
+                // Since we don't have getSeriesById exposed but getSeriesBySlug. 
+                // But mapArticle has seriesName. We need seriesSlug for the link.
+                // We can fetch all series and find by ID? Or just link to /series if slug missing?
+                // Ideally we fetched series info.
+                // Let's assume seriesName is good for display, but for Link we need slug.
+                // I'll update getArticlesBySeries to maybe embed series info? 
+                // For now, let's try to match logic or leave link generic if slug missing.
+                // Wait, Next.js 'Link' needs correct params.
+                // I will fetch the series details to get the slug.
 
-        const currentIndex = allArticles.findIndex((a: any) => a.id === article.id);
-        if (currentIndex !== -1) {
-            currentPartNumber = currentIndex + 1;
-            prevArticle = allArticles[currentIndex - 1];
-            nextArticle = allArticles[currentIndex + 1];
+                // Quick fix: fetch all series (cached) and find match
+                const { getSeries } = await import('@/lib/wordpress');
+                const allSeries = await getSeries(locale);
+                const s = allSeries.find((ser: any) => ser.id === seriesId);
+                if (s) seriesSlug = s.slug;
+            }
+        } catch (err) {
+            console.error("Error fetching siblings", err);
         }
     }
 
@@ -100,15 +97,27 @@ export default async function ArticlePage({ params }: PageProps) {
                     </header>
 
                     {/* Content */}
-                    <div className="prose prose-invert prose-lg max-w-none text-gray-200">
+                    <div
+                        className="prose prose-invert prose-lg max-w-none text-gray-200
+                        prose-headings:font-bold prose-headings:text-white
+                        [&_h2]:text-3xl [&_h2]:mt-16 [&_h2]:mb-8 [&_h2]:text-neon-blue
+                        [&_h3]:text-2xl [&_h3]:mt-12 [&_h3]:mb-6 [&_h3]:text-neon-purple
+                        [&_p]:leading-loose [&_p]:mb-8 [&_p]:text-gray-300
+                        [&_ul]:list-none [&_ul]:pl-0 [&_ul]:mb-8
+                        [&_li]:relative [&_li]:pl-6 [&_li]:mb-4 [&_li]:text-gray-300
+                        [&_li::before]:content-[''] [&_li::before]:absolute [&_li::before]:left-0 [&_li::before]:top-3
+                        [&_li::before]:w-2 [&_li::before]:h-2 [&_li::before]:bg-neon-purple 
+                        [&_li::before]:rounded-full [&_li::before]:animate-pulse
+                        [&_blockquote]:border-l-4 [&_blockquote]:border-neon-purple
+                        [&_blockquote]:pl-6 [&_blockquote]:italic [&_blockquote]:text-gray-300 [&_blockquote]:my-8
+                        prose-strong:text-white"
+                    >
                         {opening_quote && (
-                            <p className="lead text-xl text-gray-300 italic border-l-4 border-neon-purple pl-4 mb-8">
+                            <p className="lead text-xl text-gray-300 italic border-l-4 border-neon-purple pl-4 mb-12">
                                 {opening_quote}
                             </p>
                         )}
-                        <div className="whitespace-pre-wrap">
-                            {content}
-                        </div>
+                        <div dangerouslySetInnerHTML={{ __html: content }} />
                     </div>
                 </div>
 

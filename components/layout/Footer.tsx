@@ -87,6 +87,7 @@ export default function Footer() {
                 <div className="flex items-center gap-4">
                     <Link href="/privacidad" className="hover:text-neon-blue transition-colors">{t('privacy')}</Link>
                     <Link href="/terminos" className="hover:text-neon-blue transition-colors">{t('terms')}</Link>
+                    <Link href="/cookies" className="hover:text-neon-blue transition-colors">{t('cookies')}</Link>
                 </div>
             </div>
 

@@ -1,4 +1,4 @@
-import { getSeries, getStrapiMedia } from '@/lib/strapi';
+import { getSeries } from '@/lib/wordpress';
 import { Link } from '@/i18n/routing';
 import GlitchText from '@/components/ui/GlitchText';
 import { getTranslations } from 'next-intl/server';
@@ -33,12 +33,11 @@ export default async function SeriesPage({ params }: PageProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {series && series.map((serie: any, index: number) => {
-                        // Flattened response structure
-                        const { name, slug, description, cover, articulos, category } = serie;
+                        // Normalized WordPress data
+                        const { title, slug, description, coverImage, categoryName, articleCount } = serie;
 
-                        const articleCount = articulos?.length || 0; // If populated
-                        const categoryName = serie.category?.name || "Sin Categoría";
-                        const imageUrl = getStrapiMedia(cover?.url);
+                        const imageUrl = coverImage;
+                        const displayName = categoryName || "Sin Categoría";
 
                         return (
                             <div
@@ -49,7 +48,7 @@ export default async function SeriesPage({ params }: PageProps) {
                                     {categoryName && (
                                         <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md">
                                             <span className="text-xs font-mono text-neon-purple uppercase tracking-widest">
-                                                {categoryName}
+                                                {displayName}
                                             </span>
                                         </div>
                                     )}
@@ -67,7 +66,7 @@ export default async function SeriesPage({ params }: PageProps) {
 
                                     <div className="absolute bottom-0 left-0 p-6 z-20 w-full">
                                         <h3 className="text-2xl font-bold mb-2 text-white group-hover:text-neon-blue transition-colors">
-                                            {name}
+                                            {title}
                                         </h3>
                                         <p className="text-sm text-gray-300 line-clamp-2 mb-4">
                                             {description}

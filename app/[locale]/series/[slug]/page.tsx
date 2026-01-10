@@ -1,4 +1,4 @@
-import { getSeriesBySlug, calculateReadingTime } from '@/lib/strapi';
+import { getSeriesBySlug, getArticlesBySeries, calculateReadingTime, getTranslatedSlugs } from '@/lib/wordpress';
 import { notFound } from 'next/navigation';
 import { Link } from '@/i18n/routing';
 import GlitchText from '@/components/ui/GlitchText';
@@ -26,19 +26,18 @@ export default async function SeriesDetailPage({ params }: PageProps) {
         notFound();
     }
 
-    const { name, description, articulos, localizations } = series.attributes || series;
-    const seriesArticles = articulos?.data || articulos || []; // Already sorted by strapi helper
+    const { title: name, description } = series;
 
-    // Extract slugs safely
-    const slugs = { [locale]: slug };
-    const locs = localizations?.data || localizations || [];
+    // Fetch articles for this series
+    const seriesArticles = await getArticlesBySeries(series.id, locale);
+    // Sort by orderInSeries
+    seriesArticles.sort((a, b) => a.orderInSeries - b.orderInSeries);
 
-    locs.forEach((loc: any) => {
-        const attr = loc.attributes || loc;
-        if (attr.locale && attr.slug) {
-            slugs[attr.locale] = attr.slug;
-        }
-    });
+    // Fetch translated slugs
+    const translatedSlugs = await getTranslatedSlugs('series', series.translations);
+    const slugs = { ...translatedSlugs, [locale]: slug };
+    // Handle localizations if needed... WP Polylang usually handles translation by separate posts.
+    // For now we assume just one locale active or matched.
 
     return (
         <div className="min-h-screen pt-24 px-8 md:px-16 container mx-auto">
@@ -62,7 +61,7 @@ export default async function SeriesDetailPage({ params }: PageProps) {
                         Let's use t('title') ("Series").
                     */}
                     <GlitchText text={name} as="h1" className="text-4xl md:text-6xl font-bold mb-6" />
-                    <p className="text-xl text-gray-300 leading-relaxed">
+                    <p className="text-xl text-gray-300 leading-loose">
                         {description}
                     </p>
                 </div>
@@ -93,7 +92,7 @@ export default async function SeriesDetailPage({ params }: PageProps) {
                                             {article.title}
                                         </h3>
                                         <p className="text-gray-400 mb-4">
-                                            {article.opening_quote}
+                                            {article.excerpt}
                                         </p>
                                         <div className="flex items-center text-sm text-neon-blue opacity-0 group-hover:opacity-100 transition-opacity">
                                             {tCommon('read_article')} <ArrowRight size={16} className="ml-2" />
