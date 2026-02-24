@@ -1,7 +1,7 @@
 import { Article, Category, Series } from './types';
 import qs from 'qs';
 
-export const WORDPRESS_API_URL = 'https://cms-vortika.eliezerorama.online/wp-json/wp/v2';
+export const WORDPRESS_API_URL = 'https://hl.panoramasdmkt.com/wp-json/wp/v2';
 
 // Helper to fetch from WP API
 async function fetchWP(endpoint: string, params: Record<string, any> = {}) {
@@ -132,8 +132,8 @@ export async function getTranslatedSlugs(
         if (!id) return;
 
         let endpoint = '';
-        if (type === 'post') endpoint = `/posts/${id}`;
-        else if (type === 'category') endpoint = `/categories/${id}`;
+        if (type === 'post') endpoint = `/entradas-vortika/${id}`;
+        else if (type === 'category') endpoint = `/categorias-v/${id}`;
         else if (type === 'series') endpoint = `/series/${id}`;
 
         try {
@@ -163,7 +163,7 @@ export async function getCategories(locale: string = 'es') {
         order: 'asc', // Oldest to newest
         hide_empty: false,
     };
-    const data = await fetchWP('/categories', params);
+    const data = await fetchWP('/categorias-v', params);
 
     // Filter out 'uncategorized' or 'sin-categoria' (standard slugs)
     // Also excluding ID 1 explicitly if needed, but slug check is robust.
@@ -173,7 +173,7 @@ export async function getCategories(locale: string = 'es') {
 }
 
 export async function getCategoryBySlug(slug: string, locale: string = 'es') {
-    const data = await fetchWP('/categories', {
+    const data = await fetchWP('/categorias-v', {
         slug: slug,
         lang: locale,
     });
@@ -214,7 +214,7 @@ export async function getSeriesBySlug(slug: string, locale: string = 'es') {
 }
 
 export async function getArticles(locale: string = 'es', limit: number = 10) {
-    const data = await fetchWP('/posts', {
+    const data = await fetchWP('/entradas-vortika', {
         per_page: limit,
         lang: locale,
         _embed: true, // Needed for featured image
@@ -224,7 +224,7 @@ export async function getArticles(locale: string = 'es', limit: number = 10) {
 }
 
 export async function getArticleBySlug(slug: string, locale: string = 'es') {
-    const data = await fetchWP('/posts', {
+    const data = await fetchWP('/entradas-vortika', {
         slug: slug,
         lang: locale,
         _embed: true,
@@ -235,7 +235,7 @@ export async function getArticleBySlug(slug: string, locale: string = 'es') {
 
 // Helper to filter articles by Series (since WP REST API allows filtering posts by taxonomy term)
 export async function getArticlesBySeries(seriesId: string, locale: string = 'es') {
-    const data = await fetchWP('/posts', {
+    const data = await fetchWP('/entradas-vortika', {
         series: seriesId, // taxonomy query
         lang: locale,
         _embed: true,
@@ -261,7 +261,7 @@ export async function getPageBySlug(slug: string, locale: string = 'es') {
         lang: locale,
         _embed: true,
     };
-    const data = await fetchWP('/pages', params);
+    const data = await fetchWP('/paginas-vortika', params);
     if (!data || data.length === 0) return null;
     return mapPage(data[0]);
 }
